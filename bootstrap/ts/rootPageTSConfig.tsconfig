@@ -1,0 +1,72 @@
+# Backend-Layout
+mod {
+    web_layout {
+        BackendLayouts {
+            1 {
+                title = Zweispalter
+                config {
+                    backend_layout {
+                        colCount = 2
+                        rowCount = 1
+                        rows {
+                            1 {
+                                columns {
+                                    1 {
+                                        name = Haupt-Spalte
+                                        colPos = 0
+                                    }
+                                    2 {
+                                        name = Rechts
+                                        colPos = 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                icon = EXT:extension_name/Resources/Public/Icons/be_2_columns.png
+            }
+          2 {
+                title = Zweispalter ganze Seite
+                config {
+                    backend_layout {
+                        colCount = 2
+                        rowCount = 1
+                        rows {
+                            1 {
+                                columns {
+                                    1 {
+                                        name = Haupt-Spalte ganze Seite
+                                        colPos = 0
+                                    }
+                                    2 {
+                                        name = Rechts ganze Seite
+                                        colPos = 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                icon = EXT:extension_name/Resources/Public/Icons/be_2_columns.png
+            }
+        }
+    }
+}
+
+# content element layout field
+TCEFORM.tt_content {
+    layout{
+        altLabels{
+            1 = FAQ
+            2 = Slider
+            3 = Inhalt mit Hintergrund
+            4 = Kachel 1x2
+        }
+    }
+}
+
+tx_news.templateLayouts {
+    1 = Blog
+    2 = Events
+}
