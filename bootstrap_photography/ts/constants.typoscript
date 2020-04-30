@@ -1,0 +1,74 @@
+###MOD_TS:EDITABLE_CONSTANTS###
+
+TSConstantEditor.domjos_bootstrap_photography {
+    header = Domjos-Bootstrap-Photography
+    description = Constants for the Domjos-Bootstrap-Photography-Template
+}
+
+# Custom Categories
+# customsubcategory=google=Constants for Google-Features like Analytics of Webmaster-Tools
+# customsubcategory=debug=Constants to debug the Website
+# customsubcategory=external=Constants of external features like jQuery
+
+# cat=domjos_bootstrap_photography/debug/a; type=boolean; label=Debug-Mode: Set the state of Debug-Mode.
+domjos_bootstrap_photography.debug.debug_mode = 0
+
+# cat=domjos_bootstrap_photography/debug/b; type=boolean; label=Admin-Panel: Set the state of Admin-Panel.
+domjos_bootstrap_photography.debug.admin_panel = 0
+
+# cat=domjos_bootstrap_photography/debug/c; type=boolean; label=Spam-Protection: Set the state of Spam-Protection of EMail-Addresses.
+domjos_bootstrap_photography.debug.spam_protection = 0
+
+
+# cat=domjos_bootstrap_photography/cheader/a; type=string; label=Title: Set the title for the Title-Tag
+domjos_bootstrap_photography.cheader.title =
+
+# cat=domjos_bootstrap_photography/cheader/b; type=string; label=Sub-Title: Set the sub-title for the menu of the website
+domjos_bootstrap_photography.cheader.sub_title =
+
+# cat=domjos_bootstrap_photography/cheader/c; type=string; label=Meta - Author: Set the author of the whole Website.
+domjos_bootstrap_photography.cheader.author =
+
+# cat=domjos_bootstrap_photography/cheader/d; type=string; label=Meta - Description: Set the description of the Website.
+domjos_bootstrap_photography.cheader.description =
+
+# cat=domjos_bootstrap_photography/cheader/e; type=string; label=Meta - Keywords: Set the keywords for this Website.
+domjos_bootstrap_photography.cheader.keywords =
+
+# cat=domjos_bootstrap_photography/cheader/f; type=string; label=Copyright: Set the copyright of the Website
+domjos_bootstrap_photography.cheader.copyright =
+
+# cat=domjos_bootstrap_photography/cheader/g; type=string; label=Background: Set the background-image of the Website
+domjos_bootstrap_photography.cheader.background = http://localhost/typo3/domjos/9.5/fileadmin/template/img/bg.jpg
+
+
+# cat=domjos_bootstrap_photography/external/a; type=string; label=JQuery: Set the Version of JQuery
+domjos_bootstrap_photography.external.jquery = 3.4.1
+
+# cat=domjos_bootstrap_photography/external/b; type=string; label=Bootstrap: Set the Version of Bootstrap
+domjos_bootstrap_photography.external.bootstrap = 4.4.0
+
+# cat=domjos_bootstrap_photography/external/c; type=string; label=Popper: Set the Version of Popper
+domjos_bootstrap_photography.external.popper = 1.16.0
+
+
+# cat=domjos_bootstrap_photography/cmenu/a; type=string; label=Base-URL: Set the base-url of the Website.
+domjos_bootstrap_photography.cmenu.base_url =
+
+# cat=domjos_bootstrap_photography/cmenu/b; type=integer; label=MENU-TOP-Page-ID: Set the page-id of the Menu-Top.
+domjos_bootstrap_photography.cmenu.menu_top_pid =
+
+# cat=domjos_bootstrap_photography/cmenu/c; type=string; label=MENU-TOP-Exclude: Set the Exclude-List of the Menu-Top.
+domjos_bootstrap_photography.cmenu.menu_top_exclude =
+
+# cat=domjos_bootstrap_photography/cmenu/d; type=integer; label=MENU-1-Page-ID: Set the page-id of the Menu-1.
+domjos_bootstrap_photography.cmenu.menu_1_pid =
+
+# cat=domjos_bootstrap_photography/cmenu/e; type=string; label=MENU-1-Exclude: Set the Exclude-List of the Menu-1.
+domjos_bootstrap_photography.cmenu.menu_1_exclude =
+
+# cat=domjos_bootstrap_photography/cmenu/f; type=integer; label=MENU-2-Page-ID: Set the page-id of the Menu-2.
+domjos_bootstrap_photography.cmenu.menu_2_pid =
+
+# cat=domjos_bootstrap_photography/cmenu/g; type=string; label=MENU-2-Exclude: Set the Exclude-List of the Menu-2.
+domjos_bootstrap_photography.cmenu.menu_2_exclude =

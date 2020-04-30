@@ -1,0 +1,445 @@
+config {
+    debug = {$domjos_bootstrap_photography.debug.debug_mode}
+    admPanel = {$domjos_bootstrap_photography.debug.admin_panel}
+
+    baseURL = {$domjos_bootstrap_photography.cmenu.base_url}
+    noPageTitle = 2
+
+    intTarget = _top
+    extTarget = _blank
+
+    spamProtectEmailAddresses = {$domjos_bootstrap_photography.debug.spam_protection}
+    spamProtectEmailAddresses_atSubst = (at)
+    spamProtectEmailAddresses_lastDotSubst = (dot)
+}
+
+page = PAGE
+page.typeNum = 0
+
+page.10 = TEMPLATE
+page.10 {
+    template = FILE
+    template.file = fileadmin/template/template.html
+}
+
+
+page.headerData.10 = COA
+page.headerData.10 {
+    wrap = <title>|</title>
+
+    10 = TEXT
+    10.value = {$domjos_bootstrap_photography.cheader.title}
+
+    #generate the first level
+    20 = TEXT
+    20 {
+        data = leveltitle : 1
+        wrap = &nbsp;-&nbsp;|
+
+        if.isFalse.cObject = COA
+        if.isFalse.cObject {
+            1 = TEXT
+            1.value = 1
+            1.if {
+                data.cObject = TEXT
+                data.cObject.field = subtitle
+                data.cObject.ifEmpty.field = title
+                equals.data = leveltitle : 1
+            }
+        }
+    }
+
+    #generate the second level
+    30 < .20
+    30.data = leveltitle : 2
+    30.if.isFalse.cObject.1.if.equals.data = leveltitle : 2
+
+    #generate the third level
+    40 < .20
+    40.data = leveltitle : 3
+    40.if.isFalse.cObject.1.if.equals.data = leveltitle : 3
+}
+
+#set additional meta information to the head of the website.
+page.headerData.20 = TEXT
+page.headerData.20.value (
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+)
+page.headerData.30 = TEXT
+page.headerData.30.value (
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+)
+page.headerData.40 = TEXT
+page.headerData.40.value (
+    <meta name="application-name" content="{$domjos_bootstrap_photography.cheader.title}"/>
+)
+page.headerData.70 = TEXT
+page.headerData.70.value (
+    <link rel="shortcut icon" href="{$domjos_bootstrap_photography.cmenu.base_url}fileadmin/template/images/favicon.ico" type="image/x-icon"/>
+)
+
+page.meta {
+    author.field = author
+    author.ifEmpty (
+        {$domjos_bootstrap_photography.cheader.author}
+    )
+
+    description.field = description
+    description.ifEmpty (
+        {$domjos_bootstrap_photography.cheader.description}
+    )
+
+    keywords.field = keywords
+    keywords.ifEmpty (
+        {$domjos_bootstrap_photography.cheader.keywords}
+    )
+}
+
+page.includeCSS {
+    font = https://fonts.googleapis.com/css?family=Montserrat&display=swap
+    font.media = all
+    file1 = fileadmin/template/css/reset.css
+    file1.media = all
+    bootstrap = https://stackpath.bootstrapcdn.com/bootstrap/{$domjos_bootstrap_photography.external.bootstrap}/css/bootstrap.min.css
+    bootstrap.media = all
+    file2 = fileadmin/template/css/style.css
+    file2.media = all
+    file3 = fileadmin/template/css/print.css
+    file3.media = print
+}
+
+page.CSS_inlineStyle(
+    html body {
+        background: url("{$domjos_bootstrap_photography.cheader.background}") no-repeat fixed 0 0;
+    }
+)
+
+page.includeJSFooter {
+    jquery = https://code.jquery.com/jquery-{$domjos_bootstrap_photography.external.jquery}.slim.min.js
+    popper = https://cdn.jsdelivr.net/npm/popper.js@{$domjos_bootstrap_photography.external.popper}/dist/umd/popper.min.js
+    bootstrap = https://stackpath.bootstrapcdn.com/bootstrap/{$domjos_bootstrap_photography.external.bootstrap}/js/bootstrap.min.js
+    file1 = fileadmin/template/js/custom.js
+}
+
+page.10 {
+    workOnSubpart = DOCUMENT
+
+    marks {
+        WEBSITE_TITLE = TEXT
+        WEBSITE_TITLE.value = {$domjos_bootstrap_photography.cheader.title}
+
+        PAGE_BASE_URL = TEXT
+        PAGE_BASE_URL {
+            value = index.php?id={$domjos_bootstrap_photography.cmenu.menu_top_pid}
+            insertData = 1
+        }
+
+        WEBSITE_SUB_TITLE = TEXT
+        WEBSITE_SUB_TITLE.value = {$domjos_bootstrap_photography.cheader.sub_title}
+
+        PAGE_TITLE = TEXT
+        PAGE_TITLE.data = page:title
+
+        PAGE_SUB_TITLE = TEXT
+        PAGE_SUB_TITLE.data = page:subtitle
+
+        PAGE_MENU_TOP = HMENU
+        PAGE_MENU_TOP {
+            excludeUidList = {$domjos_bootstrap_photography.cmenu.menu_top_exclude}
+            special = directory
+            special.value = {$domjos_bootstrap_photography.cmenu.menu_top_pid}
+
+            1 = TMENU
+            1.IProcFunc = user_cronaccessiblemenus->makeAccessible
+            1.IProcFunc.accessKeys = {$ext.accesskeys.enabled}
+
+            2 < .1
+            3 < .1
+            1.expAll = 1
+
+            1.NO = 1
+            1.NO {
+                doNotLinkIt = 1
+                wrapItemAndSub = <li class="nav-item">|</li>
+                ATagTitle.field = abstract
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.ATagParams = class="nav-link"
+                        typolink.parameter.field = uid
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow" class="nav-link"
+
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+
+            1.ACT = 1
+            1.ACT.wrapItemAndSub = <li class="nav-item active">|</li>
+
+            #set the if-subelement state for the menu item.
+            1.IFSUB = 1
+            1.IFSUB.doNotLinkIt = 1
+            1.IFSUB.wrapItemAndSub = <li class="nav-item dropdown">|</li>
+            1.IFSUB.before = <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            1.IFSUB.after = <span class="caret"></span></a>
+
+            #set the if-subelement state for the menu item.
+            1.ACTIFSUB = 1
+            1.ACTIFSUB.doNotLinkIt = 1
+            1.ACTIFSUB.wrapItemAndSub = <li class="nav-item active dropdown">|</li>
+            1.ACTIFSUB.before = <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+            1.ACTIFSUB.after = <span class="caret"></span></a>
+
+            #configure the second level of the navigation.
+            2.wrap = <div class="dropdown-menu">|</ul>
+            2.expAll = 1
+
+            #set the normal state of the menu item.
+            2.NO = 1
+            2.NO {
+                doNotLinkIt = 1
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.ATagParams = class="dropdown-item"
+                        typolink.parameter.field = uid
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    #configuration for external links.
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow" class="nav-link"
+
+                    #configuration for internal links.
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+
+            2.ACT = 1
+            2.ACT {
+                doNotLinkIt = 1
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.ATagParams = class="dropdown-item active"
+                        typolink.parameter.field = uid
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow" class="nav-link"
+
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+        }
+
+        PAGE_MENU_1 = HMENU
+        PAGE_MENU_1 {
+            excludeUidList = {$domjos_bootstrap_photography.cmenu.menu_1_exclude}
+            special = directory
+            special.value = {$domjos_bootstrap_photography.cmenu.menu_1_pid}
+
+            1 = TMENU
+            1.IProcFunc = user_cronaccessiblemenus->makeAccessible
+            1.IProcFunc.accessKeys = {$ext.accesskeys.enabled}
+
+            2 < .1
+            3 < .1
+            1.expAll = 1
+
+            1.NO = 1
+            1.NO {
+                doNotLinkIt = 1
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.parameter.field = uid
+                        typolink.ATagParams = class="nav-link"
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    #configuration for external links.
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow"
+
+
+                    #configuration for internal links.
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+
+            1.ACT = 1
+            1.ACT {
+                doNotLinkIt = 1
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.parameter.field = uid
+                        typolink.ATagParams = class="nav-link active"
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    #configuration for external links.
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow"
+
+
+                    #configuration for internal links.
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+        }
+
+        PAGE_MENU_2 = HMENU
+        PAGE_MENU_2 {
+            excludeUidList = {$domjos_bootstrap_photography.cmenu.menu_2_exclude}
+            special = directory
+            special.value = {$domjos_bootstrap_photography.cmenu.menu_2_pid}
+
+            1 = TMENU
+            1.IProcFunc = user_cronaccessiblemenus->makeAccessible
+            1.IProcFunc.accessKeys = {$ext.accesskeys.enabled}
+            1.noBlur = 1
+
+            2 < .1
+            3 < .1
+            1.expAll = 1
+
+            1.NO = 1
+            1.NO {
+                doNotLinkIt = 1
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.parameter.field = uid
+                        typolink.ATagParams = class="nav-link"
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    #configuration for external links.
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow" class="nav-link"
+
+
+                    #configuration for internal links.
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+
+            1.ACT = 1
+            1.ACT {
+                doNotLinkIt = 1
+
+                stdWrap.cObject = CASE
+                stdWrap.cObject {
+                    key.field = doktype
+                    default = TEXT
+                    default {
+                        typolink.parameter.field = uid
+                        typolink.ATagParams = class="nav-link active"
+                        field = title
+                        stdWrap.htmlSpecialChars = 1
+                    }
+
+                    #configuration for external links.
+                    3 = TEXT
+                    3.field = title
+                    3.typolink.parameter.field = url
+                    3.typolink.target = _blank
+                    3.typolink.ATagParams = rel="nofollow"
+
+
+                    #configuration for internal links.
+                    4 = TEXT
+                    4.field = title
+                    4.typolink.parameter.field = shortcut
+                    4.typolink.target = _top
+                }
+            }
+        }
+
+        PAGE_CONTENT_MAIN = CONTENT
+        PAGE_CONTENT_MAIN {
+            table = tt_content
+            select.orderBy = sorting
+            select.where = colPos = 0
+            select.languageField = sys_language_uid
+        }
+
+        PAGE_CONTENT_SUB = CONTENT
+        PAGE_CONTENT_SUB {
+            table = tt_content
+            select.orderBy = sorting
+            select.where = colPos = 2
+            select.languageField = sys_language_uid
+        }
+
+        PAGE_COPYRIGHT = TEXT
+        PAGE_COPYRIGHT.value = {$domjos_bootstrap_photography.cheader.copyright}
+    }
+}

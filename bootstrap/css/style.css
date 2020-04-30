@@ -1,0 +1,245 @@
+/*** Reset basic-containers and headers ***/
+html {font-size: 1em;}
+body {font-size: 1em;}
+h1 {font-size: 1.8em;}
+h2 {font-size: 1.6em;}
+h3 {font-size: 1.4em;}
+h4 {font-size: 1.2em;}
+h5 {font-size: 1.2em;}
+.navbar-brand {font-size: 1.6em}
+.dropdown-menu {font-size: 1.0em}
+button {font-size: 1em;}
+
+
+/*** Styles of classes ***/
+.bgwidth {
+  width: 100%!important;
+  height: auto!important;
+}
+.bgheight {
+  height: 100%!important;
+  width: auto!important;
+}
+
+
+/*** Styles for of Background-Slider ***/
+div#background_slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+div#background_slider div.item.active {
+  height: 1920px;
+}
+
+div#background_slider img {
+  position: fixed;
+  top: 0;
+  left: 0;
+	max-height: 100% !important;
+	max-width: unset;
+	width: 100vw !important;
+	height: 100vh !important;
+
+}
+
+
+.carousel-fade .carousel-inner .item {
+  opacity: 0;
+  transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .active {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1;
+}
+
+@media all and (transform-3d), (-webkit-transform-3d) {
+    .carousel-fade .carousel-inner > .item.next,
+    .carousel-fade .carousel-inner > .item.active.right {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+    }
+    .carousel-fade .carousel-inner > .item.prev,
+    .carousel-fade .carousel-inner > .item.active.left {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+    }
+
+    .carousel-fade .carousel-inner > .item.active {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+    }
+}
+
+@media all and (max-width: 585px) {
+  div#scrollable-content table.contenttable td {
+    padding-right: 0.1em!important;
+  }
+}
+
+@media all and (max-width: 519px) {
+  div#scrollable-content table.contenttable thead {
+  	visibility:hidden;
+    display:none;
+  }
+}
+
+@media all and (max-width: 367px) {
+  div#scrollable-content table.contenttable {
+    display: inline-block;
+    overflow-x: scroll;
+  }
+}
+
+/*** Styles of Main-Menu ***/
+ul li ul.dropdown-menu {
+  z-index: 100;
+}
+
+
+/*** Styles of Breadcrumb ***/
+div#breadcrumb {
+  background-color: #f5f5f5;
+  margin-top: 50px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 99;
+}
+
+div#breadcrumb div.container ol.breadcrumb {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+
+/*** Styles of Main-Content ***/
+div#scrollable-content {
+  display: inline-block;
+  position: absolute;
+  background: rgba(255,255,255,0.7);
+  margin-top: 120px;
+  z-index: 98;
+  right: 0;
+  left: 0;
+}
+
+div#scrollable-content div.col-md-3 div.frame {
+  padding: 0.5em;
+}
+
+div#scrollable-content table.contenttable td {
+   padding-right: 2em; 
+}
+
+div#footer div.col-md-6 {
+  border-top: 1px solid gray;
+}
+
+div#footer div.col-md-6 ul.nav li {
+  display: unset;
+}
+
+div.frame {
+  clear: both;
+}
+
+div.ce-gallery {
+  margin: 0.1em;
+}
+
+div.ce-row {
+  display: inline-block;
+  width: 100%;
+}
+
+
+div.ce-row div.ce-column {
+  display: inline-block;
+}
+
+div.ce-row div.ce-column figure {
+  margin: 0.1em;
+  display: inline-block;
+}
+
+div.ce-center div.ce-row {
+  text-align: center;
+}
+
+div.ce-left div.ce-row div.ce-column {
+  float: left;
+}
+
+div.ce-right div.ce-row div.ce-column {
+  float: right;
+}
+
+div.ce-intext div.ce-row {
+  display: block;
+}
+
+div.ce-intext.ce-left div.ce-gallery {
+  float: left;
+}
+
+div.ce-intext.ce-right div.ce-gallery {
+  float: right;
+}
+
+div.ce-intext.ce-nowrap div.ce-gallery,
+div.ce-intext.ce-nowrap div.ce-bodytext {
+  display: table-cell;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+div.row div.ce-intext figure.image img,
+div.row div.ce-below figure.image img,
+div.row div.ce-above figure.image img {
+  padding: 0;
+  margin: 0.1em;
+}
+
+/* News - System */
+div.news div.row img {
+  padding: 3em;
+  margin: 1em;
+}
+
+span.news-list-tags {
+	margin-left: 0.5em;
+}
+
+span.news-list-tags span.label {
+  margin-right: 0.1em;
+}
+
+/* Simple - Poll */
+.simplePollRadioText {
+  margin-left: 3em;
+}
+table.contenttable {
+  width: 100%;
+}
