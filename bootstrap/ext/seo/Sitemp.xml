@@ -1,0 +1,29 @@
+<version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Daniel Siepmann - Coding is Art</title>
+        <description>List of blog posts at daniel-siepmann.de</description>
+        <link>{f:uri.page(pageUid: 1, absolute: 1)}</link>
+        <atom:link href="{f:uri.page(pageUid: 1. pageType: 1533906435, additionalParams: {sitemap: 'rssFeedAllBlogPosts'}, absolute: 1)}" rel="self" type="application/rss+xml" />
+        <lastBuildDate>{f:format.date(date: 'now', format: 'D, d M Y H:i:s O')}</lastBuildDate>
+        <ttl>1800</ttl>
+
+        <f:for each="{items}" as="item">
+            <f:if condition="{item.data.doktype} < 200">
+                {f:render(section: 'Item', arguments: {
+                    item: item.data
+                })}
+            </f:if>
+        </f:for>
+    </channel>
+</rss>
+
+<f:section name="Item">
+    <item>
+        <title>{item.title}</title>
+        <description>{item.abstract}</description>
+        <link>{f:uri.page(pageUid: item.uid, absolute: 1)}</link>
+        <pubDate>{f:format.date(date: item.lastUpdated, format: 'D, d M Y H:i:s O')}</pubDate>
+        <guid isPermaLink="true">{f:uri.page(pageUid: item.uid, absolute: 1)}</guid>
+    </item>
+</f:section>

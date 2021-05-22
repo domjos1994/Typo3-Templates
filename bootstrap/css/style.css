@@ -21,6 +21,14 @@ button {font-size: 1em;}
   width: auto!important;
 }
 
+.sr-only {
+  visibility: hidden;
+}
+
+span.bold {
+  font-weight: bold;
+}
+
 
 /*** Styles for of Background-Slider ***/
 div#background_slider {
@@ -114,6 +122,58 @@ ul li ul.dropdown-menu {
   z-index: 100;
 }
 
+ul li ul.dropdown-menu div.div-nav {
+  width: 12em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
+ul li ul.dropdown-menu div.div-nav a.nav-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: rgb(119, 119, 119);
+}
+
+ul li ul.dropdown-menu div.div-nav a.nav-content div.div-nav-content {
+  padding-left: 0.5em;
+  color: rgb(119, 119, 119);
+}
+
+@media all and (max-width: 1100px) {
+    ul li ul.dropdown-menu {
+        width: 25em!important;
+    }
+}
+
+@media all and (max-width: 767px) {
+  ul li ul.dropdown-menu div.div-nav {
+    width: 100%;
+  }
+  ul li ul.dropdown-menu div.div-nav a.nav-title {
+    font-size: 0.8em;
+  }
+  ul li ul.dropdown-menu div.div-nav a.nav-content div.div-nav-content {
+    font-size: 0.6em;
+  }
+  li.nav-item,
+  div.div-nav {
+    display: inline-block;
+  }
+}
+
+@media all and (max-width: 515px) {
+  div#menu-top div.container div.nav-header a.navbar-brand {
+    font-size: 1em;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+@media all and (max-width: 400px) {
+  div#menu-top div.container div#nav-content {
+    width: 100%;
+  }
+}
 
 /*** Styles of Breadcrumb ***/
 div#breadcrumb {
@@ -222,10 +282,44 @@ div.row div.ce-above figure.image img {
   margin: 0.1em;
 }
 
+div.ce-gallery div.ce-row div.ce-column figure.image figcaption {
+  display: none;
+  visibility: hidden;
+}
+
+/* Search */
+form#tx_indexedsearch div.tx-indexedsearch-form,
+form#tx_indexedsearch div.tx-indexedsearch-search-submit {
+  display: inline;
+}
+
+form.main-search div.input-group div.tx-indexedsearch-search-submit button.tx-indexedsearch-searchbox-button {
+  padding: 0;
+}
+
+form.main-search div.input-group div.tx-indexedsearch-search-submit {
+  padding-top: 0;
+  padding-bottom: 0;
+  display: table-cell!important;
+}
+
+div.tx-indexedsearch-rules {
+  display: none;
+  visibility: hidden;
+}
+
 /* News - System */
 div.news div.row img {
   padding: 3em;
   margin: 1em;
+}
+
+div.row.news-list-item {
+  border-bottom: 0.1em solid black;
+}
+
+div.row.news-list-item:last-child {
+  border-bottom: 0 solid black;
 }
 
 span.news-list-tags {
@@ -236,10 +330,7 @@ span.news-list-tags span.label {
   margin-right: 0.1em;
 }
 
-/* Simple - Poll */
-.simplePollRadioText {
-  margin-left: 3em;
-}
-table.contenttable {
-  width: 100%;
+div.news div.news-list-view div.news-list-item div.lead p {
+  margin: 0;
+  font-size: 0.8em;
 }

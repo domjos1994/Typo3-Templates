@@ -3,21 +3,22 @@ lib.menu-top = COA
 lib.menu-top {
     20 = HMENU
     20.excludeUidList = {$domjos_bootstrap.menu.menu_top.exclude}
+    20.wrap =  <li class="nav-item dropdown megamenu-li"> | </li>
     20 {
         1 = TMENU
         1 {
             expAll = 1
-            accessKey = 1
 
             NO = 1
             NO {
-                ATagTitle.field = title
-                wrapItemAndSub = <li>|</li>
+                wrapItemAndSub = <li class="nav-item">|</li>
+                ATagParams = class="nav-link"
             }
 
             CUR < .NO
             CUR {
-                wrapItemAndSub = <li class="active">|</li>
+                wrapItemAndSub = <li class="nav-item active">|</li>
+                linkWrap = |<span class="sr-only">(current)</span>
             }
 
             ACT < .CUR
@@ -25,15 +26,15 @@ lib.menu-top {
             IFSUB = 1
             IFSUB {
                 ATagTitle.field = title
-                ATagParams = class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
-                linkWrap = |<b class="caret"></b>
+                ATagParams = class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                linkWrap = |<i class="caret"></i>
                 ATagBeforeWrap = 1
-                wrapItemAndSub = <li class="dropdown">|</li>
+                wrapItemAndSub = <li class="nav-item dropdown megamenu-li"> |</li>
             }
 
             ACTIFSUB < .IFSUB
             ACTIFSUB {
-                wrapItemAndSub = <li class="dropdown active">|</li>
+                ATagParams = class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             }
 
             CURIFSUB < .ACTIFSUB
@@ -44,9 +45,27 @@ lib.menu-top {
             wrap = <ul class="dropdown-menu">|</ul>
 
             // because default Bootstrap 3 doesn't support more submenu levels:
-            IFSUB >
-            ACTIFSUB >
-            CURIFSUB >
+            IFSUB = 1
+            IFSUB {
+                linkWrap = <div class="div-nav-title"> | </div>
+                ATagBeforeWrap = <div class="div-nav-title"> | </div>
+                ATagParams = class="nav-title"
+                wrapItemAndSub = <div class="col-xs-12 col-sm-6 col-lg-3 div-nav">|</div>
+            }
+            ACTIFSUB = 1
+            ACTIFSUB {
+                linkWrap = <div class="div-nav-title"> | </div>
+                ATagBeforeWrap = <div class="div-nav-title"> | </div>
+                ATagParams = class="nav-title"
+                wrapItemAndSub = <div class="col-xs-12 col-sm-6 col-lg-3 div-nav">|</div>
+            }
+            CURIFSUB = 1
+            CURIFSUB {
+                linkWrap = <div class="div-nav-title"> | </div>
+                ATagBeforeWrap = <div class="div-nav-title"> | </div>
+                ATagParams = class="nav-title"
+                wrapItemAndSub = <div class="col-xs-12 col-sm-6 col-lg-3 div-nav">|</div>
+            }
 
             SPC = 1
             SPC {
@@ -67,6 +86,18 @@ lib.menu-top {
                 }
             }
         }
+
+        3 = TMENU
+        3 {
+            expAll = 1
+            wrap = |
+            NO = 1
+            NO {
+                linkWrap = <div class="div-nav-content">|</div>
+                ATagBeforeWrap = <div class="div-nav-content">|</div>
+                ATagParams = class="nav-content"
+            }
+        }
     }
 }
 
@@ -78,8 +109,8 @@ lib.menu-sub {
     20 {
       noBlur = 1
       special = directory
-      special.value.data = leveluid:2
-      entryLevel = 2
+      special.value.data = leveluid:3
+      entryLevel = 3
         1 = TMENU
         1 {
             expAll = 1
@@ -356,9 +387,15 @@ config {
   config.sys_language_overlay = 1
   config.linkVars=L
 }
-  
-  config.concatenateCss = 1 
-config.concatenateJs = 1 
+
+config.removeDefaultJS = external
+config.removeDefaultCss = 1
+config.setJS_mouseOver = 0
+config.inlineStyle2TempFile = 1
+
+config.concatenateCss = {$domjos_bootstrap.enabled.compression}
+config.concatenateJs = {$domjos_bootstrap.enabled.compression}
+config.compressJs = {$domjos_bootstrap.enabled.compression}
 
 [globalVar = LIT:1 = {$domjos_bootstrap.enabled.email}]
 config.spamProtectEmailAddresses = 1
@@ -378,12 +415,28 @@ config.locale_all = en_US
 config.htmlTag_langKey = en-US
 [global]
 
+plugin.tx_news {
+    settings {
+        detail {
+            showSocialShareButtons = 0
+        }
+    }
+    view {
+        twb {
+            partialRootPaths >
+            partialRootPaths {
+                0 = EXT:news/Resources/Private/Partials/
+                1 = fileadmin/template/ext/news/
+            }
+        }
+    }
+}
+
 plugin.tx_indexedsearch {
-    _DEFAULT_PI_VARS.lang = 0
-    show.rules = 0
-    blind.sections = 0
-    blind.order = 0
-    blind.lang = 0
+    settings {
+        displayAdvancedSearchLink = 0
+        targetPid = {$domjos_bootstrap.other.search}
+    }
 } 
 
 plugin.tx_seo {
@@ -443,23 +496,30 @@ page.CSS_inlineStyle (
 page.includeCSS.file1 = fileadmin/template/css/reset.css
 page.includeCSS.file1.media = all
 page.includeCSS.file2 = https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
-page.includeCSS.file2.disableCompression = 1 
-page.includeCSS.file2.excludeFromConcatenation = 1 
+page.includeCSS.file2.excludeFromConcatenation = 1
+page.includeCSS.file2.excludeFromCompression = 1
 page.includeCSS.file2.media = all
 page.includeCSS.file3 = fileadmin/template/css/style.css
 page.includeCSS.file3.media = all
 
-page.includeJS.file1 = https://code.jquery.com/jquery.min.js
-page.includeJS.file2 = https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js
+page.includeJS.file1 = https://www.googletagmanager.com/gtag/js?id={$domjos_bootstrap.other.analytics}
+page.includeJS.file1.if.isTrue = {$domjos_bootstrap.enabled.analytics}
 
-page.includeJSFooter.file1 = https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
-page.includeJSFooter.file2 = fileadmin/template/js/custom.js
+page.includeJSFooter.file1 = https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js
+page.includeJSFooter.file2 = https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
+page.includeJSFooter.file3 = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js
+page.includeJSFooter.file4 = fileadmin/template/js/custom.js
+page.includeJSFooter.file5 = fileadmin/template/js/highlight.pack.js
+page.includeJSFooter.file5.if.isTrue = {$domjos_bootstrap.enabled.highlightjs}
+
 
 page.headerData {
-    10 = TEXT
-    10 {
+    10 = COA
+    10.wrap = <title>|</title>
+    10.10 = TEXT
+    10.10 {
       field = title
-      noTrimWrap = |<title>| - {$domjos_bootstrap.header.title}</title>|
+      wrap = |&nbsp;-&nbsp;{$domjos_bootstrap.header.title}
     }
     20 = TEXT
     20.value = <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -488,15 +548,39 @@ page.headerData.70.value = <link rel="alternate" type="application/rss+xml" titl
 [globalVar = LIT:1 = {$domjos_bootstrap.enabled.analytics}]
 page.headerData.80 = TEXT
 page.headerData.80.value (
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67426926-5"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '{$domjos_bootstrap.other.analytics}');
+        gtag('config', '{$domjos_bootstrap.other.analytics}', { 'anonymize_ip': true});
     </script>
 )
+[global]
+
+[globalVar = LIT:1 = {$domjos_bootstrap.enabled.highlightjs}]
+page.headerData.100 = TEXT
+page.headerData.100.value (
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+)
+[global]
+
+[PIDinRootline = {$domjos_bootstrap.news.pids}]
+# create title
+temp.newsBrowsertitle = RECORDS
+temp.newsBrowsertitle {
+    source = {GP:tx_news_pi1|news}
+    source.insertData = 1
+    tables = tx_news_domain_model_news
+    conf.tx_news_domain_model_news >
+    conf.tx_news_domain_model_news = TEXT
+    conf.tx_news_domain_model_news.field = title
+    conf.tx_news_domain_model_news.wrap = &nbsp;-&nbsp;|
+}
+
+page.headerData.10.20 < temp.newsBrowsertitle
+page.headerData.10.20.wrap = |
 [global]
 
 page.10 = TEMPLATE
@@ -532,12 +616,23 @@ page.10 {
 }
 
 [globalVar = LIT:1 = {$domjos_bootstrap.enabled.search}]
-page.10.marks.SEARCH = TEMPLATE
-page.10.marks.SEARCH.template = FILE
-page.10.marks.SEARCH.template.file = fileadmin/template/ext/search/template.html
-page.10.marks.SEARCH.marks.PID = TEXT
-page.10.marks.SEARCH.marks.PID.value = {$domjos_bootstrap.other.search}
+page.10.marks.SEARCH = FLUIDTEMPLATE
+page.10.marks.SEARCH.file = fileadmin/template/ext/search/template.html
+page.10.marks.SEARCH.variables.PID = TEXT
+page.10.marks.SEARCH.variables.PID.value = {$domjos_bootstrap.other.search}
 [else]
 page.10.marks.SEARCH= TEXT
 page.10.marks.SEARCH.value =
+[global]
+
+[globalVar = LIT:1 = {$domjos_bootstrap.social.enable}]
+page.10.marks.SOCIAL_SHARE = FLUIDTEMPLATE
+page.10.marks.SOCIAL_SHARE.file = fileadmin/template/ext/shariff/template.html
+page.10.marks.SOCIAL_SHARE.variables.url = TEXT
+page.10.marks.SOCIAL_SHARE.variables.url.data = getIndpEnv:TYPO3_REQUEST_URL
+page.10.marks.SOCIAL_SHARE.variables.services = TEXT
+page.10.marks.SOCIAL_SHARE.variables.services.value = {$domjos_bootstrap.social.services}
+[else]
+page.10.marks.SOCIAL_SHARE= TEXT
+page.10.marks.SOCIAL_SHARE.value =
 [global]
